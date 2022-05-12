@@ -1,5 +1,6 @@
 package com.buttons.smarthome.controller;
 
+import com.buttons.smarthome.models.Apartment;
 import com.buttons.smarthome.models.LandLord;
 import com.buttons.smarthome.repo.ApartmentRepo;
 import com.buttons.smarthome.repo.LandLordRepo;
@@ -34,9 +35,27 @@ public class AdminController {
     public ResponseEntity<String> addLandLord(){
         var landLord = landLordRepo.findAll();
         var json = new JSONArray();
-        for (var i: landLord) {
-            json.add(landLord);
+        for (var l: landLord) {
+            json.add(l);
         }
+        return new ResponseEntity<>(json.toJSONString(), HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/admin/addApartment")
+    public ResponseEntity<String> addApartment(@RequestBody JsonNode payload){
+        var name = payload.findValue("name").toString();
+        var address = payload.findValue("address").toString();
+        var landLordId = payload.findValue("landLordId").asLong();
+        var landLord = landLordRepo.findById(landLordId).get();
+        apartmentRepo.save(new Apartment(name, address, landLord));
+        return new ResponseEntity<String>("SAVE", HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/admin/getApartmentList")
+    public ResponseEntity<String> getApartmentList(){
+        var apartments = apartmentRepo.findAll();
+        var json = new JSONArray();
+        json.add(apartments);
         return new ResponseEntity<>(json.toJSONString(), HttpStatus.ACCEPTED);
     }
 

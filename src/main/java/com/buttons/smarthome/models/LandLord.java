@@ -16,8 +16,9 @@ public class LandLord implements Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public UUID id;
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(columnDefinition = "serial")
+    public long id;
     public String name;
     public String surname;
     @OneToMany(cascade = CascadeType.ALL)

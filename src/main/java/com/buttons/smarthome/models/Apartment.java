@@ -8,8 +8,17 @@ import java.util.UUID;
 public class Apartment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public UUID id;
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(columnDefinition = "serial")
+    public long id;
+
+    public Apartment(){};
+
+    public Apartment(String name, String address, LandLord landLord) {
+        this.name = name;
+        this.address = address;
+        this.landLord = landLord;
+    }
 
     public String address;
     public String name;
