@@ -1,15 +1,22 @@
 package com.buttons.smarthome.models;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
-public class LandLord {
+public class LandLord implements Serializable {
+
+    public LandLord(){}
+
+    public LandLord(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
+    }
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public UUID id;
     public String name;
     public String surname;

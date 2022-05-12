@@ -6,14 +6,20 @@ import java.util.UUID;
 
 @Entity
 public class Apartment {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public UUID id;
+
     public String address;
     public String name;
+
     @OneToMany(cascade = CascadeType.ALL)
     public List<Renter> renters;
+
     @OneToOne(cascade = CascadeType.ALL)
     public LandLord landLord;
+
     @OneToMany(cascade = CascadeType.ALL)
     public List<Device> Devices;
 }
