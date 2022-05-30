@@ -2,8 +2,10 @@ package com.buttons.smarthome.controller;
 
 import com.buttons.smarthome.models.Apartment;
 import com.buttons.smarthome.models.LandLord;
+import com.buttons.smarthome.models.Renter;
 import com.buttons.smarthome.repo.ApartmentRepo;
 import com.buttons.smarthome.repo.LandLordRepo;
+import com.buttons.smarthome.repo.RenterRepo;
 import com.fasterxml.jackson.databind.JsonNode;
 import net.minidev.json.JSONArray;
 import org.springframework.http.HttpStatus;
@@ -13,16 +15,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 
 @RestController
 public class AdminController {
 
     private final LandLordRepo landLordRepo;
     private final ApartmentRepo apartmentRepo;
+    private final RenterRepo renterRepo;
 
-    public AdminController(LandLordRepo landLordRepo, ApartmentRepo apartmentRepo) {
+    public AdminController(LandLordRepo landLordRepo, ApartmentRepo apartmentRepo, RenterRepo renterRepo) {
         this.landLordRepo = landLordRepo;
         this.apartmentRepo = apartmentRepo;
+        this.renterRepo = renterRepo;
     }
 
     @PostMapping("/admin/addLandLord")
@@ -56,6 +62,20 @@ public class AdminController {
         var apartments = apartmentRepo.findAll();
         var json = new JSONArray();
         json.add(apartments);
+        return new ResponseEntity<>(json.toJSONString(), HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/admin/addRenter")
+    public ResponseEntity<String> addRenter(@RequestBody JsonNode payload) {
+        renterRepo.save(new Renter(payload.findValue("name").toString(), payload.findValue("surname").textValue()));
+        return new ResponseEntity<String>("SAVE", HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/admin/getRenters")
+    public ResponseEntity<String> getRenters(){
+        var renters = renterRepo.findAll();
+        var json = new JSONArray();
+        json.add(renters);
         return new ResponseEntity<>(json.toJSONString(), HttpStatus.ACCEPTED);
     }
 
