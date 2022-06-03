@@ -31,4 +31,5 @@ public class Apartment {
 
     @OneToMany(cascade = CascadeType.ALL)
     public List<Device> Devices;
+
 }
