@@ -10,9 +10,9 @@ public class Renter {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "serial")
-    public long id;
+    private long id;
 
-    public Renter(){}
+    private Renter(){}
 
     public Renter(String name, String surname) {
         this.name = name;
@@ -22,5 +22,5 @@ public class Renter {
     public String name;
     public String surname;
     @OneToMany(cascade = CascadeType.ALL)
-    public List<Apartment> apartments;
+    private List<Apartment> apartments;
 }

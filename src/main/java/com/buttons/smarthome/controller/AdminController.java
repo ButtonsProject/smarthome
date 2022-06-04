@@ -7,6 +7,8 @@ import com.buttons.smarthome.repo.ApartmentRepo;
 import com.buttons.smarthome.repo.LandLordRepo;
 import com.buttons.smarthome.repo.RenterRepo;
 import com.fasterxml.jackson.databind.JsonNode;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import net.minidev.json.JSONArray;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,7 @@ public class AdminController {
         return new ResponseEntity<String>("SAVE", HttpStatus.ACCEPTED);
     }
 
+
     @GetMapping("/admin/getLandLordList")
     public ResponseEntity<String> addLandLord(){
         var landLord = landLordRepo.findAll();
@@ -48,7 +51,7 @@ public class AdminController {
     }
 
     @PostMapping("/admin/addApartment")
-    public ResponseEntity<String> addApartment(@RequestBody JsonNode payload){
+    public ResponseEntity<String> addApartment(@RequestBody JsonNode payload) {
         var name = payload.findValue("name").toString();
         var address = payload.findValue("address").toString();
         var landLordId = payload.findValue("landLordId").asLong();
@@ -66,8 +69,8 @@ public class AdminController {
     }
 
     @PostMapping("/admin/addRenter")
-    public ResponseEntity<String> addRenter(@RequestBody JsonNode payload) {
-        renterRepo.save(new Renter(payload.findValue("name").toString(), payload.findValue("surname").textValue()));
+    public ResponseEntity<String> addRenter(@RequestBody Renter renter) {
+        renterRepo.save(renter);
         return new ResponseEntity<String>("SAVE", HttpStatus.ACCEPTED);
     }
 
