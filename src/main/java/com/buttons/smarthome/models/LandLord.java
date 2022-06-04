@@ -21,6 +21,13 @@ public class LandLord implements Serializable {
     public long id;
     public String name;
     public String surname;
+
     @OneToMany(cascade = CascadeType.ALL)
-    public List<Apartment> apartments;
+    private List<Apartment> apartments;
+
+    public long getId() {return id;}
+
+    public List<Apartment> getApartments(){
+        return apartments;
+    }
 }

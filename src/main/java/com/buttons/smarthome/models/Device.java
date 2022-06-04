@@ -6,7 +6,19 @@ import java.util.UUID;
 @Entity
 public class Device {
     @Id
-    public UUID id;
-    public String name;
-    public Type type;
+    private long id;
+    private long name;
+    private Type type;
+
+    public long getName() {
+        return name;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public long getId() {
+        return id;
+    }
 }
