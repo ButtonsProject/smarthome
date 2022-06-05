@@ -12,7 +12,7 @@ public class Renter {
     @Column(columnDefinition = "serial")
     private long id;
 
-    private Renter(){}
+    public Renter(){}
 
     public Renter(String name, String surname) {
         this.name = name;
@@ -23,4 +23,8 @@ public class Renter {
     public String surname;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Apartment> apartments;
+
+    public List<Apartment> getApartments() {
+        return apartments;
+    }
 }

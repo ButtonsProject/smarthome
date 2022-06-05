@@ -34,14 +34,14 @@ public class AdminController {
     }
 
     @PostMapping("/admin/addLandLord")
-    public ResponseEntity<String> addLandLord(@RequestBody JsonNode payload){
-        landLordRepo.save(new LandLord(payload.findValue("name").textValue(),payload.findValue("surname").textValue()));
+    public ResponseEntity<String> addLandLord(@RequestBody String name, @RequestBody String surname){
+        landLordRepo.save(new LandLord(name, surname));
         return new ResponseEntity<String>("SAVE", HttpStatus.ACCEPTED);
     }
 
 
     @GetMapping("/admin/getLandLordList")
-    public ResponseEntity<String> addLandLord(){
+    public ResponseEntity<String> getLandLords(){
         var landLord = landLordRepo.findAll();
         var json = new JSONArray();
         for (var l: landLord) {
@@ -50,13 +50,11 @@ public class AdminController {
         return new ResponseEntity<>(json.toJSONString(), HttpStatus.ACCEPTED);
     }
 
+    //TODO: Доделать - почему-то прокидывает поле рентеров
     @PostMapping("/admin/addApartment")
-    public ResponseEntity<String> addApartment(@RequestBody JsonNode payload) {
-        var name = payload.findValue("name").toString();
-        var address = payload.findValue("address").toString();
-        var landLordId = payload.findValue("landLordId").asLong();
-        var landLord = landLordRepo.findById(landLordId).get();
-        apartmentRepo.save(new Apartment(name, address, landLord));
+    public ResponseEntity<String> addApartment(@RequestBody long landLordID, @RequestBody Apartment apartment) {
+        var landLord = landLordRepo.findById(landLordID).get();
+        apartmentRepo.save(new Apartment(apartment.getName(), apartment.getAddress(), landLord));
         return new ResponseEntity<String>("SAVE", HttpStatus.ACCEPTED);
     }
 

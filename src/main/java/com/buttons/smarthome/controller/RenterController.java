@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.server.authorization.AuthorizationContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -30,7 +31,10 @@ public class RenterController {
     }
 
     @GetMapping("/renter/getMyApartments")
-    public ResponseEntity<String> getMyApartments(){
+    public ResponseEntity<String> getMyApartments(@RequestBody long renterID){
+        var apartments = renterRepo.findById(renterID).get().getApartments();
+        var json = new JSONArray();
+        json.add(apartments);
         return new ResponseEntity<>("template", HttpStatus.ACCEPTED);
     }
 }

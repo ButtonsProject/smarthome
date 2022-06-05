@@ -10,7 +10,7 @@ public class Apartment {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(columnDefinition = "serial")
-    public long id;
+    private long id;
 
     public Apartment(){};
 
@@ -20,16 +20,31 @@ public class Apartment {
         this.landLord = landLord;
     }
 
-    public String address;
-    public String name;
+    private String address;
+    private String name;
 
     @OneToMany(cascade = CascadeType.ALL)
-    public List<Renter> renters;
+    private List<Renter> renters;
 
     @OneToOne(cascade = CascadeType.ALL)
-    public LandLord landLord;
+    private LandLord landLord;
 
     @OneToMany(cascade = CascadeType.ALL)
-    public List<Device> Devices;
+    private List<Device> Devices;
 
+    public List<Renter> getRenters() {
+        return renters;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
