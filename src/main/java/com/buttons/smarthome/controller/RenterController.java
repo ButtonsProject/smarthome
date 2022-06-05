@@ -1,21 +1,13 @@
 package com.buttons.smarthome.controller;
 
 
-import com.buttons.smarthome.models.Apartment;
+import com.buttons.smarthome.deviceControl.CommandEndpointRecord;
+import com.buttons.smarthome.models.Device;
 import com.buttons.smarthome.models.Rent;
 import com.buttons.smarthome.rent.RentService;
-import com.buttons.smarthome.repo.ApartmentRepo;
-import com.buttons.smarthome.repo.LandLordRepo;
-import com.buttons.smarthome.repo.RenterRepo;
-import net.minidev.json.JSONArray;
-import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.web.server.authorization.AuthorizationContext;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,7 +20,18 @@ public class RenterController {
     }
 
     @GetMapping("/renter/getRent")
-    public ResponseEntity<Rent> getMyApartments(long rentID){;
+    public ResponseEntity<Rent> getMyApartments(long rentID){
         return new ResponseEntity<>(rentService.getRent(rentID), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/renter/getDevices")
+    public ResponseEntity<List<Device>> getDevices(long rentID){
+        var devices = rentService.getRent(rentID).getApartment().getDevices();
+        return new ResponseEntity<>(devices, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/renter/sendCommand")
+    public ResponseEntity<String> sendCommand(CommandEndpointRecord command){
+        return new ResponseEntity<>("device", HttpStatus.ACCEPTED);
     }
 }

@@ -1,9 +1,6 @@
 package com.buttons.smarthome.controller;
 
-import com.buttons.smarthome.models.Apartment;
-import com.buttons.smarthome.models.LandLord;
-import com.buttons.smarthome.models.Rent;
-import com.buttons.smarthome.models.Renter;
+import com.buttons.smarthome.models.*;
 import com.buttons.smarthome.rent.RentEndpointRecord;
 import com.buttons.smarthome.rent.RentService;
 import com.buttons.smarthome.repo.ApartmentRepo;
@@ -95,6 +92,16 @@ public class AdminController {
         var id = rentService.createRent(record);
         var response = new HashMap<String, Long>();
         response.put("id", id);
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/admin/addDevice")
+    public ResponseEntity<HashMap<String, Long>> addDevice(@RequestBody Device device, long apartmentId) {
+        var apartment = apartmentRepo.findById(apartmentId).get();
+        apartment.getDevices().add(device);
+        apartmentRepo.save(apartment);
+        var response = new HashMap<String, Long>();
+        response.put("id", device.getId());
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 

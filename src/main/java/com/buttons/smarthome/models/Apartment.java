@@ -31,7 +31,7 @@ public class Apartment {
     private LandLord landLord;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Device> Devices;
+    private List<Device> devices;
 
 
     public long getId() {
@@ -60,5 +60,13 @@ public class Apartment {
 
     public void setAuthToken(String authToken) {
         this.authToken = authToken;
+    }
+
+    public List<Device> getDevices() {
+        return devices;
+    }
+
+    public void setDevices(List<Device> devices) {
+        this.devices = devices;
     }
 }

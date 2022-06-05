@@ -1,16 +1,21 @@
 package com.buttons.smarthome.models;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 public class Device {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(columnDefinition = "serial")
     private long id;
-    private long name;
+    private String name;
     private Type type;
 
-    public long getName() {
+
+    public String getName() {
         return name;
     }
 
