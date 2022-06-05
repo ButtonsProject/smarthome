@@ -22,4 +22,7 @@ public class Renter {
     public String name;
     public String surname;
 
+    public long getId() {
+        return id;
+    }
 }

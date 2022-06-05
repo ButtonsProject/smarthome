@@ -4,11 +4,15 @@ package com.buttons.smarthome.controller;
 import com.buttons.smarthome.deviceControl.CommandEndpointRecord;
 import com.buttons.smarthome.models.Device;
 import com.buttons.smarthome.models.Rent;
+import com.buttons.smarthome.rent.RentEndpointRecord;
 import com.buttons.smarthome.rent.RentService;
+import net.minidev.json.JSONArray;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -19,8 +23,16 @@ public class RenterController {
         this.rentService = rentService;
     }
 
+    @GetMapping("/renter/getRents")
+    public ResponseEntity<List<RentEndpointRecord>> getMyApartments(){
+        var rents = rentService.getRents();
+        var list = new LinkedList<RentEndpointRecord>();
+        rents.forEach(rent -> list.add(rent.getRentInfo()));
+        return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
+    }
+
     @GetMapping("/renter/getRent")
-    public ResponseEntity<Rent> getMyApartments(long rentID){
+    public ResponseEntity<Rent> getApartment(long rentID){
         return new ResponseEntity<>(rentService.getRent(rentID), HttpStatus.ACCEPTED);
     }
 
