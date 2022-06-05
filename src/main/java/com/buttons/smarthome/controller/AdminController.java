@@ -39,14 +39,14 @@ public class AdminController {
     }
 
     @PostMapping("/admin/addLandLord")
-    public ResponseEntity<String> addLandLord(@RequestBody JsonNode payload){
-        landLordRepo.save(new LandLord(payload.findValue("name").textValue(),payload.findValue("surname").textValue()));
+    public ResponseEntity<String> addLandLord(@RequestBody String name, @RequestBody String surname){
+        landLordRepo.save(new LandLord(name, surname));
         return new ResponseEntity<String>("SAVE", HttpStatus.ACCEPTED);
     }
 
 
     @GetMapping("/admin/getLandLordList")
-    public ResponseEntity<String> addLandLord(){
+    public ResponseEntity<String> getLandLord(){
         var landLord = landLordRepo.findAll();
         var json = new JSONArray();
         for (var l: landLord) {
@@ -74,8 +74,8 @@ public class AdminController {
     }
 
     @PostMapping("/admin/addRenter")
-    public ResponseEntity<String> addRenter(@RequestBody Renter renter) {
-        renterRepo.save(renter);
+    public ResponseEntity<String> addRenter(@RequestBody String name, @RequestBody String surname) {
+        renterRepo.save(new Renter(name, surname));
         return new ResponseEntity<String>("SAVE", HttpStatus.ACCEPTED);
     }
 

@@ -1,5 +1,7 @@
 package com.buttons.smarthome.models;
 
+import com.buttons.smarthome.rent.RentEndpointRecord;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,10 +25,10 @@ public class Rent {
 
     @ManyToOne
     @JoinColumn(name = "apartment_id")
-    public Apartment apartment;
+    private Apartment apartment;
     @ManyToOne
     @JoinColumn(name = "renter_id")
-    public Renter renter;
+    private Renter renter;
     public LocalDateTime startTimeRent;
     public LocalDateTime endTimeRent;
     public String description;
@@ -49,5 +51,9 @@ public class Rent {
 
     public long getId() {
         return id;
+    }
+
+    public RentEndpointRecord getRentInfo(){
+        return new RentEndpointRecord(apartment.getId(), renter.getId(), startTimeRent, endTimeRent, description);
     }
 }

@@ -9,6 +9,7 @@ import com.buttons.smarthome.repo.RenterRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class RentService {
 
@@ -36,6 +37,9 @@ public class RentService {
 
     public Rent getRent(long rentID) {
         return rentRepo.findById(rentID).get();
+    }
+    public Iterable<Rent> getRents(){
+        return  rentRepo.findAll();
     }
 
 }
