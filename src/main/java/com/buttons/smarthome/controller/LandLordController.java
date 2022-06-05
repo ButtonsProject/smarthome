@@ -39,11 +39,11 @@ public class LandLordController {
     }
 
     //TODO: Переписать по-человечески
-    @GetMapping("/landLord/getRenters")
-    public ResponseEntity<String> getRenters(@RequestBody long apartmentID){
-        var renters = apartmentRepo.findById(apartmentID).get().getRenters();
-        var json = new JSONArray();
-        json.add(renters);
-        return new ResponseEntity<>("SAVE", HttpStatus.ACCEPTED);
-    }
+//    @GetMapping("/landLord/getRenters")
+//    public ResponseEntity<String> getRenters(@RequestBody long apartmentID){
+//        var renters = apartmentRepo.findById(apartmentID).get().getRenters();
+//        var json = new JSONArray();
+//        json.add(renters);
+//        return new ResponseEntity<>("SAVE", HttpStatus.ACCEPTED);
+//    }
 }

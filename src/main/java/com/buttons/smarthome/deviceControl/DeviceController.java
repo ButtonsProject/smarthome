@@ -30,4 +30,8 @@ public class DeviceController {
         System.out.println(response);
         return true;
     }
+
+    public boolean updateDevices(long apartmentId) {
+        return true;
+    }
 }

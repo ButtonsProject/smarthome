@@ -23,8 +23,9 @@ public class Apartment {
     private String address;
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Renter> renters;
+    private transient String controlAddress;
+
+    private transient String authToken;
 
     @OneToOne(cascade = CascadeType.ALL)
     private LandLord landLord;
@@ -32,9 +33,6 @@ public class Apartment {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Device> Devices;
 
-    public List<Renter> getRenters() {
-        return renters;
-    }
 
     public long getId() {
         return id;
@@ -46,5 +44,21 @@ public class Apartment {
 
     public String getName() {
         return name;
+    }
+
+    public String getControlAddress() {
+        return controlAddress;
+    }
+
+    public void setControlAddress(String controlAddress) {
+        this.controlAddress = controlAddress;
+    }
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
     }
 }

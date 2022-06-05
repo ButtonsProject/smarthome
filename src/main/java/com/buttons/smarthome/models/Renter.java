@@ -21,10 +21,5 @@ public class Renter {
 
     public String name;
     public String surname;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Apartment> apartments;
 
-    public List<Apartment> getApartments() {
-        return apartments;
-    }
 }
