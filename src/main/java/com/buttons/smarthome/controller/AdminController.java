@@ -39,7 +39,7 @@ public class AdminController {
     }
 
     @PostMapping("/admin/addLandLord")
-    public ResponseEntity<String> addLandLord(@RequestBody String name, @RequestBody String surname){
+    public ResponseEntity<String> addLandLord(@RequestBody String name, String surname){
         landLordRepo.save(new LandLord(name, surname));
         return new ResponseEntity<String>("SAVE", HttpStatus.ACCEPTED);
     }
@@ -74,7 +74,7 @@ public class AdminController {
     }
 
     @PostMapping("/admin/addRenter")
-    public ResponseEntity<String> addRenter(@RequestBody String name, @RequestBody String surname) {
+    public ResponseEntity<String> addRenter(@RequestBody String name, String surname) {
         renterRepo.save(new Renter(name, surname));
         return new ResponseEntity<String>("SAVE", HttpStatus.ACCEPTED);
     }

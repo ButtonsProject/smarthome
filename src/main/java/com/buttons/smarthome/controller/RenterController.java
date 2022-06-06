@@ -44,6 +44,16 @@ public class RenterController {
 
     @PostMapping("/renter/sendCommand")
     public ResponseEntity<String> sendCommand(CommandEndpointRecord command){
+        var deviceId = command.deviceId;
+        var rent = command.rentId;
+        var apartment = rentService.getRent(rent).getApartment();
+        var device = apartment
+                .getDevices()
+                .stream()
+                .filter(dev -> dev.getId() == deviceId)
+                .findAny()
+                .orElse(null);
+
         return new ResponseEntity<>("device", HttpStatus.ACCEPTED);
     }
 }
