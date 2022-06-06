@@ -1,13 +1,14 @@
 package com.buttons.smarthome.controller;
 
+import com.buttons.smarthome.records.ApartmentEndpointRecord;
 import com.buttons.smarthome.models.*;
-import com.buttons.smarthome.rent.RentEndpointRecord;
-import com.buttons.smarthome.rent.RentService;
+import com.buttons.smarthome.records.*;
+import com.buttons.smarthome.records.RentEndpointRecord;
+import com.buttons.smarthome.services.RentService;
 import com.buttons.smarthome.repo.ApartmentRepo;
 import com.buttons.smarthome.repo.LandLordRepo;
 import com.buttons.smarthome.repo.RentRepo;
 import com.buttons.smarthome.repo.RenterRepo;
-import com.fasterxml.jackson.databind.JsonNode;
 import net.minidev.json.JSONArray;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
-import java.util.Map;
 
 
 @RestController
@@ -39,8 +39,8 @@ public class AdminController {
     }
 
     @PostMapping("/admin/addLandLord")
-    public ResponseEntity<String> addLandLord(@RequestBody String name, String surname){
-        landLordRepo.save(new LandLord(name, surname));
+    public ResponseEntity<String> addLandLord(@RequestBody LandLordRecord record){
+        landLordRepo.save(new LandLord(record.getName(), record.getSurname()));
         return new ResponseEntity<String>("SAVE", HttpStatus.ACCEPTED);
     }
 
@@ -56,12 +56,12 @@ public class AdminController {
     }
 
     @PostMapping("/admin/addApartment")
-    public ResponseEntity<String> addApartment(@RequestBody JsonNode payload) {
-        var name = payload.findValue("name").toString();
-        var address = payload.findValue("address").toString();
-        var landLordId = payload.findValue("landLordId").asLong();
-        var landLord = landLordRepo.findById(landLordId).get();
-        apartmentRepo.save(new Apartment(name, address, landLord));
+    public ResponseEntity<String> addApartment(@RequestBody ApartmentEndpointRecord record) {
+        var landLord = landLordRepo.findById(record.getLandLordId()).get();
+        var apartments = new Apartment(record.getName(), record.getAddress(), landLord,
+                record.getControlAddress(), record.getAuthKey());
+        landLord.getApartments().add(apartments);
+        apartmentRepo.save(apartments);
         return new ResponseEntity<String>("SAVE", HttpStatus.ACCEPTED);
     }
 
@@ -74,8 +74,8 @@ public class AdminController {
     }
 
     @PostMapping("/admin/addRenter")
-    public ResponseEntity<String> addRenter(@RequestBody String name, String surname) {
-        renterRepo.save(new Renter(name, surname));
+    public ResponseEntity<String> addRenter(@RequestBody RenterRecord record) {
+        renterRepo.save(new Renter(record.getName(), record.getSurname()));
         return new ResponseEntity<String>("SAVE", HttpStatus.ACCEPTED);
     }
 
@@ -96,10 +96,10 @@ public class AdminController {
     }
 
     @PostMapping("/admin/addDevice")
-    public ResponseEntity<HashMap<String, Long>> addDevice(@RequestBody Device device, long apartmentId) {
-        var apartment = apartmentRepo.findById(apartmentId).get();
+    public ResponseEntity<HashMap<String, Long>> addDevice(@RequestBody DeviceRecord record) {
+        var apartment = apartmentRepo.findById(record.getApartmentId()).get();
+        var device = new Device(record.getName(), record.getType());
         apartment.getDevices().add(device);
-        apartmentRepo.save(apartment);
         var response = new HashMap<String, Long>();
         response.put("id", device.getId());
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);

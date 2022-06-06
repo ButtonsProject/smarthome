@@ -1,4 +1,4 @@
-package com.buttons.smarthome.deviceControl;
+package com.buttons.smarthome.services.deviceControl;
 
 import org.springframework.stereotype.Service;
 

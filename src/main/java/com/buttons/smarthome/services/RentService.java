@@ -1,12 +1,11 @@
-package com.buttons.smarthome.rent;
+package com.buttons.smarthome.services;
 
-import com.buttons.smarthome.models.Apartment;
 import com.buttons.smarthome.models.Rent;
+import com.buttons.smarthome.records.RentEndpointRecord;
 import com.buttons.smarthome.repo.ApartmentRepo;
 import com.buttons.smarthome.repo.LandLordRepo;
 import com.buttons.smarthome.repo.RentRepo;
 import com.buttons.smarthome.repo.RenterRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 

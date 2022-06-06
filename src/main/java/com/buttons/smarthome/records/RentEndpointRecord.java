@@ -1,4 +1,4 @@
-package com.buttons.smarthome.rent;
+package com.buttons.smarthome.records;
 
 import java.time.LocalDateTime;
 

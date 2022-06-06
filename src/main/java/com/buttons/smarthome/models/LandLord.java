@@ -1,5 +1,7 @@
 package com.buttons.smarthome.models;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -19,7 +21,11 @@ public class LandLord implements Serializable {
     @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(columnDefinition = "serial")
     private long id;
+
+    @Schema(description =  "Pavlusha")
     public String name;
+
+    @Schema(description =  "Livov")
     public String surname;
 
     @OneToMany(cascade = CascadeType.ALL)
