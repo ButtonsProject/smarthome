@@ -19,6 +19,10 @@ public class Device {
         this.type = type;
     }
 
+    public Device() {
+
+    }
+
     public String getName() {
         return name;
     }
