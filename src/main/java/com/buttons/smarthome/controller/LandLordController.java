@@ -1,25 +1,30 @@
 package com.buttons.smarthome.controller;
 
-import com.buttons.smarthome.models.Apartment;
-import com.buttons.smarthome.models.LandLord;
+import com.buttons.smarthome.services.deviceControl.CommandEndpointRecord;
+import com.buttons.smarthome.models.Device;
+import com.buttons.smarthome.services.RentService;
 import com.buttons.smarthome.repo.ApartmentRepo;
 import com.buttons.smarthome.repo.LandLordRepo;
-import com.fasterxml.jackson.databind.JsonNode;
 import net.minidev.json.JSONArray;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class LandLordController {
     private final LandLordRepo landLordRepo;
     private final ApartmentRepo apartmentRepo;
     private final RenterController renterRepo;
+    private RentService rentService;
 
-    public LandLordController(LandLordRepo landLordRepo, ApartmentRepo apartmentRepo, RenterController renterController){
+    public LandLordController(LandLordRepo landLordRepo, ApartmentRepo apartmentRepo,
+                              RenterController renterController, RentService rentService){
         this.landLordRepo = landLordRepo;
         this.apartmentRepo = apartmentRepo;
         this.renterRepo = renterController;
+        this.rentService = rentService;
     }
 
     //TODO: Переписать по-человечески
@@ -31,11 +36,15 @@ public class LandLordController {
         return new ResponseEntity<>(json.toJSONString(), HttpStatus.ACCEPTED);
     }
 
-    //TODO: Написать реализацию добавления апартаментов текущему лэндлорду
-    @PostMapping("/landLord/addApartment")
-    public ResponseEntity<String> addApartment(@RequestBody Apartment apartment){
-        apartmentRepo.save(apartment);
-        return new ResponseEntity<>("SAVE", HttpStatus.ACCEPTED);
+    @GetMapping("/landLord/getDevices")
+    public ResponseEntity<List<Device>> getDevices(@RequestBody long apartmentID){
+        var devices = apartmentRepo.findById(apartmentID).get().getDevices();
+        return new ResponseEntity<>(devices, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/landLord/sendCommand")
+    public ResponseEntity<String> sendCommand(@RequestBody CommandEndpointRecord command){
+        return new ResponseEntity<>("device", HttpStatus.ACCEPTED);
     }
 
     //TODO: Переписать по-человечески

@@ -2,7 +2,6 @@ package com.buttons.smarthome.models;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 public class Apartment {
@@ -14,12 +13,13 @@ public class Apartment {
 
     public Apartment(){};
 
-    public Apartment(String name, String address, LandLord landLord) {
+    public Apartment(String name, String address, LandLord landLord, String controlAddress, String authToken) {
         this.name = name;
         this.address = address;
         this.landLord = landLord;
+        this.authToken = authToken;
+        this.controlAddress = controlAddress;
     }
-
     private String address;
     private String name;
 

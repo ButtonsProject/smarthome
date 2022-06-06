@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class RenterController {
     }
 
     @GetMapping("/renter/getRents")
-    public ResponseEntity<List<RentEndpointRecord>> getMyApartments(){
+    public ResponseEntity<List<RentEndpointRecord>> getMyApartments(@RequestBody long renterID){
         var rents = rentService.getRents();
         var list = new LinkedList<RentEndpointRecord>();
         rents.forEach(rent -> list.add(rent.getRentInfo()));
@@ -34,18 +35,18 @@ public class RenterController {
     }
 
     @GetMapping("/renter/getRent")
-    public ResponseEntity<Rent> getApartment(long rentID){
+    public ResponseEntity<Rent> getApartment(@RequestBody long rentID){
         return new ResponseEntity<>(rentService.getRent(rentID), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/renter/getDevices")
-    public ResponseEntity<List<Device>> getDevices(long rentID){
+    public ResponseEntity<List<Device>> getDevices(@RequestBody long rentID){
         var devices = rentService.getRent(rentID).getApartment().getDevices();
         return new ResponseEntity<>(devices, HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/renter/sendCommand")
-    public ResponseEntity<String> sendCommand(CommandEndpointRecord command) throws IOException, InterruptedException {
+    public ResponseEntity<String> sendCommand(@RequestBody CommandEndpointRecord command) throws IOException, InterruptedException {
         var deviceId = command.deviceId;
         var rent = command.rentId;
         var apartment = rentService.getRent(rent).getApartment();
