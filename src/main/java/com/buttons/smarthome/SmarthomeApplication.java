@@ -1,6 +1,5 @@
 package com.buttons.smarthome;
 
-import com.buttons.smarthome.deviceControl.DeviceController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

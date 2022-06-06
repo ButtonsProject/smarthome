@@ -1,4 +1,4 @@
-package com.buttons.smarthome.deviceControl;
+package com.buttons.smarthome.services.deviceControl;
 
 import com.buttons.smarthome.models.Apartment;
 import com.buttons.smarthome.models.Device;

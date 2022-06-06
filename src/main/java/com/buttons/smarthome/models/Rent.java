@@ -1,10 +1,9 @@
 package com.buttons.smarthome.models;
 
-import com.buttons.smarthome.rent.RentEndpointRecord;
+import com.buttons.smarthome.records.RentEndpointRecord;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 public class Rent {

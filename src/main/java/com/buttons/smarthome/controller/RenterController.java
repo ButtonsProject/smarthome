@@ -1,19 +1,17 @@
 package com.buttons.smarthome.controller;
 
 
-import com.buttons.smarthome.deviceControl.CommandEndpointRecord;
-import com.buttons.smarthome.deviceControl.DeviceService;
+import com.buttons.smarthome.services.deviceControl.CommandEndpointRecord;
+import com.buttons.smarthome.services.deviceControl.DeviceService;
 import com.buttons.smarthome.models.Device;
 import com.buttons.smarthome.models.Rent;
-import com.buttons.smarthome.rent.RentEndpointRecord;
-import com.buttons.smarthome.rent.RentService;
-import net.minidev.json.JSONArray;
+import com.buttons.smarthome.records.RentEndpointRecord;
+import com.buttons.smarthome.services.RentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

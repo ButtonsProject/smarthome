@@ -1,8 +1,8 @@
 package com.buttons.smarthome.controller;
 
 import com.buttons.smarthome.models.*;
-import com.buttons.smarthome.rent.RentEndpointRecord;
-import com.buttons.smarthome.rent.RentService;
+import com.buttons.smarthome.records.RentEndpointRecord;
+import com.buttons.smarthome.services.RentService;
 import com.buttons.smarthome.repo.ApartmentRepo;
 import com.buttons.smarthome.repo.LandLordRepo;
 import com.buttons.smarthome.repo.RentRepo;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
-import java.util.Map;
 
 
 @RestController
