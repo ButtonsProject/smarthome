@@ -74,7 +74,7 @@ public class AdminController {
     }
 
     @PostMapping("/admin/addRenter")
-    public ResponseEntity<String> addRenter(@RequestBody String name, String surname) {
+    public ResponseEntity<String> addRenter(String name, String surname) {
         renterRepo.save(new Renter(name, surname));
         return new ResponseEntity<String>("SAVE", HttpStatus.ACCEPTED);
     }
