@@ -95,14 +95,14 @@ public class AdminController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/admin/addDevice")
-    public ResponseEntity<HashMap<String, Long>> addDevice(@RequestBody DeviceRecord record) {
-        var apartment = apartmentRepo.findById(record.getApartmentId()).get();
-        var device = new Device(record.getName(), record.getType());
-        apartment.getDevices().add(device);
-        var response = new HashMap<String, Long>();
-        response.put("id", device.getId());
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-    }
+//    @PostMapping("/admin/addDevice")
+//    public ResponseEntity<HashMap<String, Long>> addDevice(@RequestBody DeviceRecord record) {
+//        var apartment = apartmentRepo.findById(record.getApartmentId()).get();
+//        var device = new Device(record.getName(), record.getType());
+//        apartment.getDevices().add(device);
+//        var response = new HashMap<String, Long>();
+//        response.put("id", device.getId());
+//        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+//    }
 
 }
