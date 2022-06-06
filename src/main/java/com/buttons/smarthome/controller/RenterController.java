@@ -2,6 +2,7 @@ package com.buttons.smarthome.controller;
 
 
 import com.buttons.smarthome.services.deviceControl.CommandEndpointRecord;
+import com.buttons.smarthome.services.deviceControl.DeviceService;
 import com.buttons.smarthome.models.Device;
 import com.buttons.smarthome.models.Rent;
 import com.buttons.smarthome.records.RentEndpointRecord;
@@ -10,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,6 +20,8 @@ import java.util.List;
 public class RenterController {
 
     private RentService rentService;
+
+    private DeviceService deviceService;
     public RenterController(RentService rentService) {
         this.rentService = rentService;
     }
@@ -41,7 +46,7 @@ public class RenterController {
     }
 
     @PostMapping("/renter/sendCommand")
-    public ResponseEntity<String> sendCommand(@RequestBody CommandEndpointRecord command){
+    public ResponseEntity<String> sendCommand(@RequestBody CommandEndpointRecord command) throws IOException, InterruptedException {
         var deviceId = command.deviceId;
         var rent = command.rentId;
         var apartment = rentService.getRent(rent).getApartment();
@@ -52,6 +57,9 @@ public class RenterController {
                 .findAny()
                 .orElse(null);
 
-        return new ResponseEntity<>("device", HttpStatus.ACCEPTED);
+
+        assert device != null;
+        deviceService.sendToDevice(apartment, device, command.command);
+        return new ResponseEntity<>("OK", HttpStatus.ACCEPTED);
     }
 }
