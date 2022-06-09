@@ -16,19 +16,24 @@ import java.util.List;
 @Service
 public class DeviceService {
 
-    HttpClient client = HttpClient.newBuilder()
-            .version(HttpClient.Version.HTTP_2)
+    public boolean sendToDevice(Apartment apartment, Device device, String command) throws IOException, InterruptedException {
+
+        HttpClient client = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_2)
                 .build();
 
-    public boolean sendToDevice(Apartment apartment, Device device, String command) throws IOException, InterruptedException {
+
+        System.out.println("http://" + apartment.getControlAddress() + "rest/items/" + device.getName());
+
         var request = HttpRequest.newBuilder()
-                .uri(URI.create(apartment.getControlAddress() + device.getName()))
+                .uri(URI.create("http://" + apartment.getControlAddress() + "/rest/items/" + device.getName()))
                 .header("Authorization", "Bearer " + apartment.getAuthToken())
                 .header("Content-Type", "text/plain")
                 .POST(HttpRequest.BodyPublishers.ofString(command))
                 .build();
 
-        client.send(request, HttpResponse.BodyHandlers.ofString());
+        var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
         return true;
     }
 
@@ -37,6 +42,10 @@ public class DeviceService {
                 .uri(URI.create(apartment.getControlAddress() + "/items"))
                 .header("Authorization", "Bearer " + apartment.getAuthToken())
                 .GET()
+                .build();
+
+        HttpClient client = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_2)
                 .build();
 
         var response = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
@@ -51,9 +60,14 @@ public class DeviceService {
             var state = jObject.getString("state");
             var type = jObject.getString("type");
             if (type.equals("Switch")) {
-                var typ = Type.Switch;
+                var typ = Type.Lamp;
                 result.add(new Device(name, state, typ));
             }
+            if (type.equals("Color")) {
+                var typ = Type.LAMP_COLOR;
+                result.add(new Device(name, state, typ));
+            }
+            if (type.equals("Dimmable"))
         }
 
         return result;

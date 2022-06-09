@@ -2,5 +2,6 @@ package com.buttons.smarthome.models;
 
 public enum Type {
     Lamp,
-    Switch
+    LAMP_DIMMABLE,
+    LAMP_COLOR
 }

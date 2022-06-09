@@ -23,9 +23,9 @@ public class Apartment {
     private String address;
     private String name;
 
-    private transient String controlAddress;
+    private String controlAddress;
 
-    private transient String authToken;
+    private String authToken;
 
     @OneToOne(cascade = CascadeType.ALL)
     private LandLord landLord;

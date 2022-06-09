@@ -9,10 +9,13 @@ public class DeviceRecord {
     private Type type;
     private long apartmentId;
 
-    public DeviceRecord(long id, String name, Type type, long apartmentId){
+    private String state;
+
+    public DeviceRecord(long id, String name, Type type, String deviceState, long apartmentId){
         this.id = id;
         this.name = name;
         this.type = type;
+        this.state = deviceState;
         this.apartmentId = apartmentId;
     }
 
@@ -31,5 +34,13 @@ public class DeviceRecord {
 
     public long getApartmentId() {
         return apartmentId;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }
