@@ -1,4 +1,4 @@
-package com.buttons.smarthome.services.deviceControl;
+package com.buttons.smarthome.records;
 
 public class CommandEndpointRecord {
     public long deviceId;

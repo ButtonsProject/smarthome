@@ -1,8 +1,8 @@
 package com.buttons.smarthome.controller;
 
 
-import com.buttons.smarthome.services.deviceControl.CommandEndpointRecord;
-import com.buttons.smarthome.services.deviceControl.DeviceService;
+import com.buttons.smarthome.records.CommandEndpointRecord;
+import com.buttons.smarthome.services.DeviceService;
 import com.buttons.smarthome.models.Device;
 import com.buttons.smarthome.models.Rent;
 import com.buttons.smarthome.records.RentEndpointRecord;
@@ -13,15 +13,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @RestController
 public class RenterController {
 
-    private RentService rentService;
+    private final RentService rentService;
 
-    private DeviceService deviceService;
+    private final DeviceService deviceService;
     public RenterController(RentService rentService, DeviceService deviceService) {
 
         this.rentService = rentService;
@@ -30,10 +29,7 @@ public class RenterController {
 
     @GetMapping("/renter/getRents")
     public ResponseEntity<List<RentEndpointRecord>> getMyApartments(long renterID){
-        var rents = rentService.getRents();
-        var list = new LinkedList<RentEndpointRecord>();
-        rents.forEach(rent -> list.add(rent.getRentInfo()));
-        return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(rentService.getRenterRents(renterID), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/renter/getRent")
@@ -61,7 +57,9 @@ public class RenterController {
 
 
         assert device != null;
-        deviceService.sendToDevice(apartment, device, command.command);
-        return new ResponseEntity<>("OK", HttpStatus.ACCEPTED);
+        if (deviceService.sendToDevice(apartment, device, command.command))
+            return new ResponseEntity<>("OK", HttpStatus.ACCEPTED);
+        else
+            return new ResponseEntity<>("SEND ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

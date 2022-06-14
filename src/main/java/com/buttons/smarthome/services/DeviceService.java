@@ -1,4 +1,4 @@
-package com.buttons.smarthome.services.deviceControl;
+package com.buttons.smarthome.services;
 
 import com.buttons.smarthome.models.Apartment;
 import com.buttons.smarthome.models.Device;
@@ -67,7 +67,7 @@ public class DeviceService {
                 var typ = Type.LAMP_COLOR;
                 result.add(new Device(name, state, typ));
             }
-            if (type.equals("Dimmable"))
+//            if (type.equals("Dimmable"))
         }
 
         return result;

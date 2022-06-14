@@ -1,6 +1,6 @@
 package com.buttons.smarthome.controller;
 
-import com.buttons.smarthome.services.deviceControl.CommandEndpointRecord;
+import com.buttons.smarthome.records.CommandEndpointRecord;
 import com.buttons.smarthome.models.Device;
 import com.buttons.smarthome.services.RentService;
 import com.buttons.smarthome.repo.ApartmentRepo;
