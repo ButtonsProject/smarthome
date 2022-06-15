@@ -11,17 +11,22 @@ public class Apartment {
     @Column(columnDefinition = "serial")
     private long id;
 
-    public Apartment(){};
 
-    public Apartment(String name, String address, LandLord landLord, String controlAddress, String authToken) {
+    public Apartment(String name, String address, LandLord landLord,String imgUrl , String controlAddress, String authToken) {
         this.name = name;
         this.address = address;
         this.landLord = landLord;
         this.authToken = authToken;
         this.controlAddress = controlAddress;
+        this.imgUrl = imgUrl;
+    }
+
+    public Apartment() {
+
     }
     private String address;
     private String name;
+    private String imgUrl;
 
     private String controlAddress;
 
@@ -68,5 +73,13 @@ public class Apartment {
 
     public void setDevices(List<Device> devices) {
         this.devices = devices;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }

@@ -41,10 +41,9 @@ public class RentService {
             throw new IllegalArgumentException("Can't find value");
     }
 
-    public List<RentEndpointRecord> getRenterRents(long RenterID) {
+    public List<Rent> getRenterRents(long RenterID) {
         return StreamSupport.stream(rentRepo.findAll().spliterator(), true)
-                .filter(r -> r.getRenter().getId() == RenterID)
-                .map(Rent::getRentInfo).toList();
+                .filter(r -> r.getRenter().getId() == RenterID).toList();
     }
 
     public Rent getRent(long rentID) {

@@ -28,7 +28,7 @@ public class RenterController {
     }
 
     @GetMapping("/renter/getRents")
-    public ResponseEntity<List<RentEndpointRecord>> getMyApartments(long renterID){
+    public ResponseEntity<List<Rent>> getMyApartments(long renterID){
         return new ResponseEntity<>(rentService.getRenterRents(renterID), HttpStatus.ACCEPTED);
     }
 

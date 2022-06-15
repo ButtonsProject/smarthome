@@ -58,7 +58,7 @@ public class AdminController {
     @PostMapping("/admin/addApartment")
     public ResponseEntity<String> addApartment(@RequestBody ApartmentEndpointRecord record) {
         var landLord = landLordRepo.findById(record.getLandLordId()).get();
-        var apartments = new Apartment(record.getName(), record.getAddress(), landLord,
+        var apartments = new Apartment(record.getName(), record.getAddress(),landLord, record.getImgUrl(),
                 record.getControlAddress(), record.getAuthKey());
         landLord.getApartments().add(apartments);
         apartmentRepo.save(apartments);
